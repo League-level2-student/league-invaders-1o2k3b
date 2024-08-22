@@ -11,8 +11,8 @@ public class GameObject {
 	
 		 this.x = 220;
 		 this.y = 600;
-		 this.width = LeagueInvaders.WIDTH;
-		 this.height = LeagueInvaders.HEIGHT;
+		 this.width = 50;
+		 this.height = 50;
 	 
 	 }
 	 

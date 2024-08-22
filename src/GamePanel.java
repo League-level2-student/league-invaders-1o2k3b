@@ -10,9 +10,14 @@ public class GamePanel extends JPanel implements ActionListener , KeyListener {
 	final int MENU = 0;
 	final int GAME = 1;
 	final int END = 2;
+	
+	
 
 	int currentState = MENU;
 
+	Rocketship ship = new Rocketship(250, 700, 50, 50);
+	ObjectManager manager = new ObjectManager(ship);
+	
 	Font titleFont;
 	Font textFont;
 	Font endFont;
@@ -26,6 +31,7 @@ public class GamePanel extends JPanel implements ActionListener , KeyListener {
 		
 		this.frameDraw = new Timer(1000 / 60, this);
 		this.frameDraw.start();
+		
 		
 	}
 
@@ -45,7 +51,7 @@ public class GamePanel extends JPanel implements ActionListener , KeyListener {
 	}
 
 	void updateGameState() {
-
+manager.update();
 	}
 
 	void updateEndState() {
@@ -75,6 +81,8 @@ public class GamePanel extends JPanel implements ActionListener , KeyListener {
 	void drawGameState(Graphics g) {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
+		
+		manager.draw(g);
 	}
 
 	void drawEndState(Graphics g) {
@@ -111,35 +119,55 @@ public class GamePanel extends JPanel implements ActionListener , KeyListener {
 	}
 
 	@Override
-	public void keyPressed(KeyEvent arg0) {
+	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		if (arg0.getKeyCode()==KeyEvent.VK_ENTER) {
+	
+		
+		if (e.getKeyCode()==KeyEvent.VK_ENTER) {
 		    if (currentState == END) {
 		        currentState = MENU;
 		    } else {
 		        currentState++;
 		    }
 		}
+		
 		if(currentState == GAME) {
-		    if(arg0.getKeyCode()==KeyEvent.VK_UP) {
-		    	System.out.println("UP");
+	
+			if(e.getKeyCode()==KeyEvent.VK_UP) {
+		    ship.movingUp = true;
 		    }
-		    if(arg0.getKeyCode()==KeyEvent.VK_DOWN) {
-		    	System.out.println("DOWN");
+		    if(e.getKeyCode()==KeyEvent.VK_DOWN) {
+		    	 ship.movingDown = true;
 		    }
-		    if(arg0.getKeyCode()==KeyEvent.VK_LEFT) {
-		    	System.out.println("LEFT");
+		    if(e.getKeyCode()==KeyEvent.VK_LEFT) {
+		    	 ship.movingLeft = true;
 		    }
-		    if(arg0.getKeyCode()==KeyEvent.VK_RIGHT) {
-		    	System.out.println("RIGHT");
+		    if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
+		    	 ship.movingRight = true;
 		    }
 		}
+		
+		
 	}
 
 	@Override
-	public void keyReleased(KeyEvent arg0) {
+	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+		if(currentState == GAME) {
+			
+			if(e.getKeyCode()==KeyEvent.VK_UP) {
+		    ship.movingUp = false;
+		    }
+		    if(e.getKeyCode()==KeyEvent.VK_DOWN) {
+		    	 ship.movingDown = false;
+		    }
+		    if(e.getKeyCode()==KeyEvent.VK_LEFT) {
+		    	 ship.movingLeft = false;
+		    }
+		    if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
+		    	 ship.movingRight = false;
+		    }
+		}
 	}
 
 	@Override
