@@ -1,7 +1,9 @@
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.*;
 
-public class ObjectManager {
+public class ObjectManager implements ActionListener{
 
 	Rocketship ship;
 	
@@ -10,8 +12,11 @@ public class ObjectManager {
 	
 	Random r = new Random();
 	
-	public ObjectManager(Rocketship s) {
+
+	
+	ObjectManager(Rocketship s) {
 		this.ship = s;
+		addAlien();
 	}
 	
 	void addProjectile(Projectile p) {
@@ -24,7 +29,7 @@ public class ObjectManager {
 	
 	void update() {
 	ship.update();
-		
+		purgeObjects();
 		for(Alien a: aliens) {
 			a.update();
 			if(a.y > LeagueInvaders.HEIGHT) {
@@ -64,6 +69,14 @@ public class ObjectManager {
 				p.remove();
 			}
 		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+	
+		addAlien();
+	System.out.println(aliens.size());	
 	}
 	
 	 

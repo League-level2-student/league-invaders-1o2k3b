@@ -9,10 +9,10 @@ public class GameObject {
 	 public GameObject(int x, int y, int width, int height) {
 		// TODO Auto-generated constructor stub
 	
-		 this.x = 220;
-		 this.y = 600;
-		 this.width = 50;
-		 this.height = 50;
+		 this.x = x;
+		 this.y = y;
+		 this.width = width;
+		 this.height = height;
 	 
 	 }
 	 
