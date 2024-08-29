@@ -53,6 +53,9 @@ public class Rocketship extends GameObject {
 	}
 
 	void update() {
+
+		
+
 		if (movingUp) {
 			up();
 		}
@@ -65,6 +68,7 @@ public class Rocketship extends GameObject {
 		if (movingRight) {
 			right();
 		}
+		super.update();
 	}
 
 	// }
@@ -82,7 +86,7 @@ public class Rocketship extends GameObject {
 	}
 
 	public Projectile getProjectile() {
-		return new Projectile(x + width / 2, y, 10, 10);
+		return new Projectile(x + width / 2, y, 8, 14);
 	}
 
 }

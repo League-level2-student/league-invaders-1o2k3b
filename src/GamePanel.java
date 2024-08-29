@@ -20,7 +20,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	int currentState = MENU;
 
 	Rocketship ship = new Rocketship(250, 700, 50, 50);
-	ObjectManager manager = new ObjectManager(ship);
+	ObjectManager manager = new ObjectManager(ship, this);
 
 	Font titleFont;
 	Font textFont;
@@ -37,6 +37,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		this.frameDraw = new Timer(1000 / 60, this);
 		this.frameDraw.start();
 
+	
+		
 		if (needImage) {
 			loadImage("space.png");
 		}
@@ -60,7 +62,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	void updateGameState() {
 		manager.update();
-		startGame();      
+		
+	     
 	}
 
 	void updateEndState() {
@@ -91,9 +94,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		if (gotImage) {
 			g.drawImage(image, 0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT, null);
 		} else {
+			
 			g.setColor(Color.BLACK);
 			g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
 		}
+		
+
 		
 		manager.draw(g);
 	}
@@ -145,19 +151,34 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 	
 	void startGame() {
-	    alienSpawn = new Timer(1000 , manager);
-	    alienSpawn.start();
+		if(alienSpawn == null) {
+			alienSpawn = new Timer(1000 , manager);
+		}
+		
+	    alienSpawn.restart();
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
+		
+		if(e.getKeyCode() == KeyEvent.VK_SPACE && currentState == GAME) {
+			manager.addProjectile(ship.getProjectile());
+		}
 
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			if (currentState == END) {
 				currentState = MENU;
 			} else {
 				currentState++;
+				if(currentState == GAME) {
+					startGame();
+					ship.movingDown = false;
+					ship.movingUp = false;
+					ship.movingLeft = false;
+					ship.movingRight = false;
+					manager.score = 0;
+				}
 			}
 		}
 
